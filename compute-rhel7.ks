@@ -97,4 +97,3 @@ $SNIPPET('gcm_postscript')
 $SNIPPET('gcm_kickstart_done')
 # End final steps
 %end
-[root@master1 kickstarts]#
