@@ -1,0 +1,8 @@
+
+wget https://raw.githubusercontent.com/atulyadavtech/cloud/master/sshd_config -O /etc/ssh/sshd_config
+wget https://raw.githubusercontent.com/atulyadavtech/cloud/master/ssh_config -O /etc/ssh/ssh_config
+systemctl reload sshd
+mount -t xfs LABEL="app" /opt
+mount -t xfs LABLE="home2" /home2
+systemctl start nfs
+systemctl start pbs
