@@ -1,1 +1,39 @@
-date
+echo "Start the Cluster Installation"
+echo "Master Node Preapartion"
+
+echo "master.local" > /etc/hostname
+hostnamectl status
+hostname -A;hostname -d;hostname -f;hostname -i;hostname -I
+
+mkdir -p /var/spool/pbs/server_priv/
+mkdir -p /opt/locuz/ganana/vol/webapp/gcm-content/repo/rpm/
+mkdir -p /opt/locuz/ganana/vol/webapp/gcm-content/repo/Redhat7Update4/media
+mkdir -p /opt/apps
+mkdir -p /etc/pdsh
+mkdir -p /opt/softback
+mkdir -p /export/
+mkdir -p /export/home/{module,shared}
+
+cat >/etc/yum.repos.d/Redhat-Media.repo<< EOF
+[Redhat-media]
+name=Redhat-$releasever - Media
+baseurl=file:///opt/Redhat7Update4/media
+gpgcheck=0
+enabled=1
+EOF
+yum group install "Development Tools" "Compatibility Libraries" -y
+yum -y install perl-devel expat-devel hesiod hwloc-libs perl-Env perl-Switch postgresql postgresql-libs postgresql-server procmail sendmail tcl tk tcl-devel tk-devel environment-modules ntp lsscsi mlocate ipmitool nmap iptables-services
+systemctl mask firewalld;systemctl stop firewalld;yum -y install iptables-services;systemctl enable iptables;systemctl start iptables
+iptables --list;iptables --flush;iptables --delete-chain;service iptables save
+
+systemctl enable rpcbind
+systemctl enable nfs-lock
+systemctl enable nfs-server
+systemctl enable nfs-idmap
+
+
+##disable unwanted service
+systemctl disable cups bluetooth firewalld NetworkManager
+
+>/etc/profile.d/master.sh
+export MODULEPATH=/home/module
