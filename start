@@ -4,7 +4,8 @@ echo "Master Node Preapartion"
 echo "master.local" > /etc/hostname
 hostnamectl status
 hostname -A;hostname -d;hostname -f;hostname -i;hostname -I
-
+mkdir -p /ganana-ha/locuz
+mkdir -p /ganana-ha/docker
 mkdir -p /var/spool/pbs/server_priv/
 mkdir -p /opt/locuz/ganana/vol/webapp/gcm-content/repo/rpm/
 mkdir -p /opt/locuz/ganana/vol/webapp/gcm-content/repo/Redhat7Update4/media
